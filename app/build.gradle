@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     compileSdkVersion 28
@@ -12,7 +11,6 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -20,29 +18,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
 
-//    sourceSets.each {
-//        it.java.srcDirs += "src/$it.name/kotlin"
-//    }
-//
-//    testOptions {
-//        junitPlatform {
-//            filters {
-//                engines {
-//                    include 'spek2'
-//                }
-//            }
-//            jacocoOptions {
-//                // here goes all jacoco config, for example
-//                html.enabled = true
-//                xml.enabled = false
-//                csv.enabled = false
-//                unitTests.all {
-//                    testLogging.events = ["passed", "skipped", "failed"]
-//                }
-//            }
-//        }
-//    }
+
+repositories {
+    maven { url "http://dl.bintray.com/jetbrains/spek" }
 }
 
 dependencies {
@@ -53,7 +33,7 @@ dependencies {
     def room_version = "1.1.1"
     def conductor = "2.1.5"
     def coroutines = "0.30.1"
-    def spek_version = "2.0.0-rc.1"
+    def spek_version = "1.1.5"
 
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
@@ -76,13 +56,11 @@ dependencies {
     implementation "com.bluelinelabs:conductor-archlifecycle:$conductor"
     //Debug
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
-
-//    //Testing
-//    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
-//    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
-//    // spek requires kotlin-reflect, omit when already in classpath
-//    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-
+    //Tests
+    testImplementation "org.jetbrains.spek:spek-api:$spek_version"
+    testImplementation "org.jetbrains.spek:spek-junit-platform-engine:$spek_version"
+    testImplementation "org.junit.platform:junit-platform-runner:1.1.0"
+    testImplementation "io.mockk:mockk:1.8.9"
 
 }
 kotlin {
