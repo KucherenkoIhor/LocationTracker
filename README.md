@@ -7,11 +7,11 @@ The test folder contains a test of use case using the Spek framework.
 ## Screenshots
 App contains a screen with a map that shows the last saved location if it exist and it is not older than 1 hour. It also request location updates and moves a marker according to updates.
 <p>
- <img src ="https://raw.githubusercontent.com/KucherenkoIhor/LocationTracker/master/screenshots/1.jpg", height=500/>
+  <img src ="https://raw.githubusercontent.com/KucherenkoIhor/LocationTracker/master/screenshots/2.jpg", height=500/>
 </p>
  App also contains a screen with a history of locations saved to database in background.
 <p>
- <img src ="https://raw.githubusercontent.com/KucherenkoIhor/LocationTracker/master/screenshots/2.jpg", height=500/>
+ <img src ="https://raw.githubusercontent.com/KucherenkoIhor/LocationTracker/master/screenshots/1.jpg", height=500/>
 </p>
 
 ## Libraries
