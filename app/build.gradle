@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//apply plugin: "de.mannodermaus.android-junit5"
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.ik.locationtracker"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+//    sourceSets.each {
+//        it.java.srcDirs += "src/$it.name/kotlin"
+//    }
+//
+//    testOptions {
+//        junitPlatform {
+//            filters {
+//                engines {
+//                    include 'spek2'
+//                }
+//            }
+//            jacocoOptions {
+//                // here goes all jacoco config, for example
+//                html.enabled = true
+//                xml.enabled = false
+//                csv.enabled = false
+//                unitTests.all {
+//                    testLogging.events = ["passed", "skipped", "failed"]
+//                }
+//            }
+//        }
+//    }
+}
+
+dependencies {
+    def appCompatVersion = "1.0.0"
+    def googleMapsVersion = "15.0.1"
+    def kodeinVersion = "5.3.0"
+    def archLifecycleVersion = "1.1.1"
+    def room_version = "1.1.1"
+    def conductor = "2.1.5"
+    def coroutines = "0.30.1"
+    def spek_version = "2.0.0-rc.1"
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.recyclerview:recyclerview:$appCompatVersion"
+    implementation "com.google.android.gms:play-services-maps:$googleMapsVersion"
+    implementation "com.google.android.gms:play-services-location:$googleMapsVersion"
+    implementation 'com.nabinbhandari.android:permissions:3.7'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    // Kodein
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodeinVersion"
+    implementation "org.kodein.di:kodein-di-framework-android-x:$kodeinVersion"
+    //Arch
+    implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
+    kapt "android.arch.lifecycle:compiler:$archLifecycleVersion"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+    //Conductor
+    implementation "com.bluelinelabs:conductor:$conductor"
+    implementation "com.bluelinelabs:conductor-archlifecycle:$conductor"
+    //Debug
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
+
+//    //Testing
+//    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+//    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+//    // spek requires kotlin-reflect, omit when already in classpath
+//    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+androidExtensions {
+    experimental = true
+}
