@@ -26,7 +26,7 @@ class HistoryController: LifecycleController() {
 
     private var isFirstAttach = true
 
-    private val adapter by lazy(LazyThreadSafetyMode.NONE) { HistoryAdapter() }
+    private val historyAdapter by lazy(LazyThreadSafetyMode.NONE) { HistoryAdapter() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.screen_history, container, false)
@@ -52,7 +52,7 @@ class HistoryController: LifecycleController() {
     }
 
     private fun initRecyclerView(recyclerView: RecyclerView) = with(recyclerView) {
-        adapter = adapter
+        adapter = historyAdapter
         layoutManager = LinearLayoutManager(context)
         addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         setHasFixedSize(true)
@@ -61,7 +61,7 @@ class HistoryController: LifecycleController() {
     private fun subscribeToViewModel() {
         val model = ViewModelProviders.of(this.activity as FragmentActivity).get(HistoryViewModel::class.java)
         model.getHistory().observe(this, Observer<List<LocationStamp>> {
-            adapter.dataSource = it
+            historyAdapter.dataSource = it
         })
     }
 }
