@@ -1,7 +1,5 @@
 package com.ik.locationtracker.domains.usecases
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import com.ik.locationtracker.domains.services.JobScheduler
 
 /**
@@ -13,11 +11,9 @@ interface ScheduleLocationSavingUseCase {
 }
 
 class ScheduleLocationSavingUseCaseImpl(
-        private val alarmManager: AlarmManager,
-        private val jobScheduler: JobScheduler,
-        private val pendingIntent: PendingIntent
+        private val jobScheduler: JobScheduler
 ): ScheduleLocationSavingUseCase {
     override fun schedule() {
-        jobScheduler.schedule(alarmManager, pendingIntent)
+        jobScheduler.schedule()
     }
 }

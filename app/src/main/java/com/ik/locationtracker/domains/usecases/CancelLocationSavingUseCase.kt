@@ -1,7 +1,5 @@
 package com.ik.locationtracker.domains.usecases
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import com.ik.locationtracker.domains.services.JobScheduler
 
 /**
@@ -13,13 +11,9 @@ interface CancelLocationSavingUseCase {
 }
 
 class CancelLocationSavingUseCaseImpl(
-        private val alarmManager: AlarmManager,
-        private val jobScheduler: JobScheduler,
-        private val pendingIntent: PendingIntent?
+        private val jobScheduler: JobScheduler
 ) : CancelLocationSavingUseCase {
     override fun cancel() {
-        pendingIntent?.also { pending ->
-            jobScheduler.cancelScheduledJob(alarmManager, pending)
-        }
+        jobScheduler.cancelScheduledJob()
     }
 }

@@ -8,24 +8,13 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.ik.locationtracker.R
 import com.ik.locationtracker.app.map.MapController
-import com.ik.locationtracker.util.checkAcceesFineLocationPermission
 import kotlinx.android.synthetic.main.activity_launch.*
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
-import kotlin.coroutines.experimental.CoroutineContext
 
 
-class LaunchActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
-
-    private lateinit var androidJob: Job
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + androidJob
+class LaunchActivity : AppCompatActivity(), KodeinAware{
 
     override val kodein by closestKodein()
 
@@ -36,14 +25,7 @@ class LaunchActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launch)
-        androidJob = Job()
-
-        launch {
-            val isGranted = checkAcceesFineLocationPermission()
-            if (isGranted) {
-                ProcessLifecycleOwner.get().lifecycle.addObserver(appStateObserver)
-            }
-        }
+        ProcessLifecycleOwner.get().lifecycle.addObserver(appStateObserver)
 
         router = Conductor.attachRouter(this, controller_container , savedInstanceState)
         if (!router.hasRootController()) {
@@ -55,10 +37,5 @@ class LaunchActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
         if (!router.handleBack()) {
             super.onBackPressed()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        androidJob.cancel()
     }
 }

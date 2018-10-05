@@ -2,7 +2,11 @@ package com.ik.locationtracker.domains.services
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_NO_CREATE
 import androidx.core.app.AlarmManagerCompat
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 import java.util.concurrent.TimeUnit
 
 
@@ -13,14 +17,17 @@ import java.util.concurrent.TimeUnit
 const val UPDATE_INTERVAL_IN_BACKGROUND: Long = 15
 
 interface JobScheduler {
-    fun schedule(alarmManager: AlarmManager, pendingIntent: PendingIntent)
+    fun schedule()
 
-    fun cancelScheduledJob(alarmManager: AlarmManager, pendingIntent: PendingIntent)
+    fun cancelScheduledJob()
 }
 
-class JobSchedulerImpl: JobScheduler {
+class JobSchedulerImpl(override val kodein: Kodein): JobScheduler, KodeinAware {
 
-    override fun schedule(alarmManager: AlarmManager, pendingIntent: PendingIntent) {
+    private val alarmManager: AlarmManager by kodein.instance()
+
+    override fun schedule() {
+        val pendingIntent: PendingIntent by kodein.instance()
         val interval = TimeUnit.MINUTES.toMillis(UPDATE_INTERVAL_IN_BACKGROUND)
         AlarmManagerCompat.setExactAndAllowWhileIdle(
                 alarmManager,
@@ -29,7 +36,10 @@ class JobSchedulerImpl: JobScheduler {
                 pendingIntent)
     }
 
-    override fun cancelScheduledJob(alarmManager: AlarmManager, pendingIntent: PendingIntent) {
-        alarmManager.cancel(pendingIntent)
+    override fun cancelScheduledJob() {
+        val pendingIntent: PendingIntent? by kodein.instance(::FLAG_NO_CREATE.name)
+        pendingIntent?.also {
+            alarmManager.cancel(it)
+        }
     }
 }

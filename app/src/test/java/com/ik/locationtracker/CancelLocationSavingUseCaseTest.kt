@@ -1,7 +1,5 @@
 package com.ik.locationtracker
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import com.ik.locationtracker.domains.services.JobScheduler
 import com.ik.locationtracker.domains.usecases.CancelLocationSavingUseCase
 import com.ik.locationtracker.domains.usecases.CancelLocationSavingUseCaseImpl
@@ -17,19 +15,18 @@ import org.jetbrains.spek.api.dsl.on
  * Created by ihor_kucherenko on 10/4/18.
  * https://github.com/KucherenkoIhor
  */
-class CancelLocationSavingUseCaseTest: Spek({
-        val alarmManager = mockk<AlarmManager>()
-        val pendingIntent = mockk<PendingIntent>()
-        val jobScheduler = mockk<JobScheduler> {
-            every { cancelScheduledJob(alarmManager, pendingIntent) } returns Unit
-        }
-        val useCase: CancelLocationSavingUseCase by memoized { CancelLocationSavingUseCaseImpl(alarmManager, jobScheduler, pendingIntent) }
+class CancelLocationSavingUseCaseTest : Spek({
+
+    val jobScheduler = mockk<JobScheduler> {
+        every { cancelScheduledJob() } returns Unit
+    }
+    val useCase: CancelLocationSavingUseCase by memoized { CancelLocationSavingUseCaseImpl(jobScheduler) }
 
     describe("CancelLocationSavingUseCase using") {
-        on("the cancel() methos is invoked") {
+        on("the cancel() method is invoked") {
             useCase.cancel()
             it("invokes the cancelScheduledJob method of JobScheduler") {
-                verify { jobScheduler.cancelScheduledJob(alarmManager, pendingIntent) }
+                verify { jobScheduler.cancelScheduledJob() }
             }
         }
     }

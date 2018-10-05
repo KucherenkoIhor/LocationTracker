@@ -8,7 +8,10 @@ import androidx.room.Room
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.ik.locationtracker.domains.data.db.AppDatabase
-import com.ik.locationtracker.domains.services.*
+import com.ik.locationtracker.domains.services.LastKnownLocationLiveData
+import com.ik.locationtracker.domains.services.LocationRepository
+import com.ik.locationtracker.domains.services.LocationRepositoryImpl
+import com.ik.locationtracker.domains.services.LocationUpdatesLiveData
 import com.ik.locationtracker.domains.usecases.*
 import com.ik.locationtracker.util.pendingIntentServiceCompat
 import org.kodein.di.Kodein
@@ -31,7 +34,7 @@ fun appModule(context: Context) = Kodein.Module("AppModule") {
     bind<PendingIntent>(::FLAG_NO_CREATE.name) with provider {
         pendingIntentServiceCompat(context, 0, Intent(context, TrackLocationService::class.java), FLAG_NO_CREATE)
     }
-    bind<JobScheduler>() with singleton { JobSchedulerImpl() }
+
     bind<AppDatabase>() with singleton {
         Room.databaseBuilder(context, AppDatabase::class.java, "database")
                 .fallbackToDestructiveMigration()
@@ -64,10 +67,10 @@ fun appModule(context: Context) = Kodein.Module("AppModule") {
         RetrieveCurrentLocationUseCaseImpl(instance(), instance())
     }
     bind<ScheduleLocationSavingUseCase>() with provider {
-        ScheduleLocationSavingUseCaseImpl(instance(), instance(), instance())
+        ScheduleLocationSavingUseCaseImpl(instance())
     }
     bind<CancelLocationSavingUseCase>() with provider {
-        CancelLocationSavingUseCaseImpl(instance(), instance(), instance(::FLAG_NO_CREATE.name))
+        CancelLocationSavingUseCaseImpl(instance())
     }
     bind<AppLifecycleObserver>() with singleton { AppStateObserverImpl(instance(), instance()) }
 }

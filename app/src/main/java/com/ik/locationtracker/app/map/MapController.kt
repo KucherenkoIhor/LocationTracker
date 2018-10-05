@@ -113,7 +113,7 @@ class MapController : RestoreViewOnCreateController(), CoroutineScope, Lifecycle
     }
 
     private fun GoogleMap?.showLocation(latLng: LatLng) {
-        val cameraPosition = CameraPosition.fromLatLngZoom(latLng, 10F)
+        val cameraPosition = CameraPosition.fromLatLngZoom(latLng, 20F)
         this?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         if (marker == null) {
             marker = this?.addMarker(MarkerOptions().position(latLng))
