@@ -52,7 +52,6 @@ class LaunchActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         if (!router.handleBack()) {
             super.onBackPressed()
         }
