@@ -1,4 +1,4 @@
-package com.ik.locationtracker.domains.entities
+package com.ik.locationtracker.layers.domains
 
 import java.util.*
 

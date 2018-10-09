@@ -1,4 +1,4 @@
-package com.ik.locationtracker.domains.services
+package com.ik.locationtracker.layers.services
 
 import android.annotation.SuppressLint
 import android.os.Looper
@@ -7,7 +7,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
-import com.ik.locationtracker.domains.entities.LocationStamp
+import com.ik.locationtracker.layers.domains.LocationStamp
 import com.ik.locationtracker.util.locationToLocationTimeStamp
 import java.util.concurrent.TimeUnit
 

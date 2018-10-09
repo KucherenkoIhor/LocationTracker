@@ -1,8 +1,8 @@
-package com.ik.locationtracker.domains.usecases
+package com.ik.locationtracker.layers.usecases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.ik.locationtracker.domains.entities.LocationStamp
+import com.ik.locationtracker.layers.domains.LocationStamp
 import java.util.concurrent.TimeUnit
 
 /**
@@ -10,26 +10,25 @@ import java.util.concurrent.TimeUnit
  * https://github.com/KucherenkoIhor
  */
 interface RetrieveCurrentLocationUseCase {
-    fun getCurrentLocation(): LiveData<LocationStamp>
+    operator fun invoke(): LiveData<LocationStamp>
 }
 
 class RetrieveCurrentLocationUseCaseImpl(
         private val retrieveTheLastKnowLocationUseCase: RetrieveTheLastKnowLocationUseCase,
         private val retrieveTheLastSavedLocationStampUseCase: RetrieveTheLastSavedLocationStampUseCase
 ): RetrieveCurrentLocationUseCase {
-    override fun getCurrentLocation(): LiveData<LocationStamp> {
-
+    override fun invoke(): LiveData<LocationStamp> {
         val liveDataMerger = MediatorLiveData<LocationStamp>()
-        liveDataMerger.addSource(retrieveTheLastSavedLocationStampUseCase.retrieveTheLastLocationStamp()) { locationStamp ->
+        liveDataMerger.addSource(retrieveTheLastSavedLocationStampUseCase()) { locationStamp ->
             if (locationStamp != null) {
                 val isLessThanOneHour = (System.currentTimeMillis() - locationStamp.time.time) < TimeUnit.HOURS.toMillis(1)
                 if (isLessThanOneHour) {
                     liveDataMerger.value = locationStamp
                 } else {
-                    liveDataMerger.addSource(retrieveTheLastKnowLocationUseCase.getLastKnownLocation()) { liveDataMerger.value = it }
+                    liveDataMerger.addSource(retrieveTheLastKnowLocationUseCase()) { liveDataMerger.value = it }
                 }
             } else {
-                liveDataMerger.addSource(retrieveTheLastKnowLocationUseCase.getLastKnownLocation()) {
+                liveDataMerger.addSource(retrieveTheLastKnowLocationUseCase()) {
                     liveDataMerger.value = it }
             }
         }

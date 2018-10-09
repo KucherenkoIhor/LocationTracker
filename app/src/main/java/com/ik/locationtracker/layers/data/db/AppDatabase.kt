@@ -1,11 +1,11 @@
-package com.ik.locationtracker.domains.data.db
+package com.ik.locationtracker.layers.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ik.locationtracker.domains.data.db.converters.DateConverter
-import com.ik.locationtracker.domains.data.db.daos.LocationStampDao
-import com.ik.locationtracker.domains.data.db.entities.LocationStamp
+import com.ik.locationtracker.layers.data.db.converters.DateConverter
+import com.ik.locationtracker.layers.data.db.daos.LocationStampDao
+import com.ik.locationtracker.layers.data.db.entities.LocationStamp
 
 
 /**

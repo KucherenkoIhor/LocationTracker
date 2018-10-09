@@ -1,9 +1,9 @@
-package com.ik.locationtracker.domains.services
+package com.ik.locationtracker.layers.services
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.ik.locationtracker.domains.data.db.daos.LocationStampDao
-import com.ik.locationtracker.domains.entities.LocationStamp
+import com.ik.locationtracker.layers.data.db.daos.LocationStampDao
+import com.ik.locationtracker.layers.domains.LocationStamp
 import com.ik.locationtracker.util.locationTimeStampConverter
 import com.ik.locationtracker.util.locationTimeStampsConverter
 

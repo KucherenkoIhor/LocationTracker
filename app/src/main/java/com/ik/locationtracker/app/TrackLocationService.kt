@@ -1,6 +1,5 @@
 package com.ik.locationtracker.app
 
-import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,13 +12,11 @@ import android.os.IBinder
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.ik.locationtracker.BuildConfig
-import com.ik.locationtracker.domains.usecases.RetrieveTheLastKnowLocationUseCase
-import com.ik.locationtracker.domains.usecases.SaveLocationStampUseCase
-import com.ik.locationtracker.domains.usecases.ScheduleLocationSavingUseCase
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.withContext
+import com.ik.locationtracker.layers.usecases.RetrieveTheLastKnowLocationUseCase
+import com.ik.locationtracker.layers.usecases.SaveLocationStampUseCase
+import com.ik.locationtracker.layers.usecases.ScheduleLocationSavingUseCase
+import com.ik.locationtracker.util.awaitFirstValue
+import kotlinx.coroutines.experimental.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
@@ -33,7 +30,10 @@ const val NOTIFICATION_ID = 101
 
 class TrackLocationService : Service(), KodeinAware, CoroutineScope {
 
-    override val coroutineContext: CoroutineContext = Dispatchers.Main
+    private lateinit var androidJob: Job
+
+    override val coroutineContext: CoroutineContext
+        get() =  Dispatchers.Main + androidJob
 
     override val kodein by closestKodein()
 
@@ -45,18 +45,26 @@ class TrackLocationService : Service(), KodeinAware, CoroutineScope {
         return null
     }
 
-    @SuppressLint("MissingPermission")
     override fun onCreate() {
         super.onCreate()
-        startForeground(NOTIFICATION_ID, buildNotification())
-        lastKnownLocationUseCase.getLastKnownLocation().observeForever { location ->
-            launch {
-                withContext(Dispatchers.IO) { saveLocationStampUseCase.save(location) }
-                scheduleLocationSavingUseCase.schedule()
-                stopForeground(true)
-                stopSelf()
-            }
+        androidJob = Job()
+        launch {
+            startForeground(NOTIFICATION_ID, buildNotification())
+            val location = lastKnownLocationUseCase().awaitFirstValue()
+            withContext(Dispatchers.IO) { saveLocationStampUseCase(location) }
+            finish()
         }
+    }
+
+    private fun finish() {
+        scheduleLocationSavingUseCase()
+        stopForeground(true)
+        stopSelf()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        androidJob.cancel()
     }
 
     private fun buildNotification() = getNotificationBuilder().build()

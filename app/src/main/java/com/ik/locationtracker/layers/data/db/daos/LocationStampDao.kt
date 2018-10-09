@@ -1,10 +1,10 @@
-package com.ik.locationtracker.domains.data.db.daos
+package com.ik.locationtracker.layers.data.db.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.ik.locationtracker.domains.data.db.entities.LocationStamp
+import com.ik.locationtracker.layers.data.db.entities.LocationStamp
 
 
 

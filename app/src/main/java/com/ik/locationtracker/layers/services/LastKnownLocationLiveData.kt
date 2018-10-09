@@ -1,11 +1,11 @@
-package com.ik.locationtracker.domains.services
+package com.ik.locationtracker.layers.services
 
 import android.annotation.SuppressLint
 import android.location.Location
 import androidx.lifecycle.LiveData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.tasks.OnSuccessListener
-import com.ik.locationtracker.domains.entities.LocationStamp
+import com.ik.locationtracker.layers.domains.LocationStamp
 import com.ik.locationtracker.util.locationToLocationTimeStamp
 
 /**

@@ -1,8 +1,8 @@
 package com.ik.locationtracker
 
-import com.ik.locationtracker.domains.services.JobScheduler
-import com.ik.locationtracker.domains.usecases.CancelLocationSavingUseCase
-import com.ik.locationtracker.domains.usecases.CancelLocationSavingUseCaseImpl
+import com.ik.locationtracker.layers.services.JobScheduler
+import com.ik.locationtracker.layers.usecases.CancelLocationSavingUseCase
+import com.ik.locationtracker.layers.usecases.CancelLocationSavingUseCaseImpl
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -24,7 +24,7 @@ class CancelLocationSavingUseCaseTest : Spek({
 
     describe("CancelLocationSavingUseCase using") {
         on("the cancel() method is invoked") {
-            useCase.cancel()
+            useCase()
             it("invokes the cancelScheduledJob method of JobScheduler") {
                 verify { jobScheduler.cancelScheduledJob() }
             }

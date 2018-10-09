@@ -1,19 +1,19 @@
-package com.ik.locationtracker.domains.usecases
+package com.ik.locationtracker.layers.usecases
 
-import com.ik.locationtracker.domains.services.JobScheduler
+import com.ik.locationtracker.layers.services.JobScheduler
 
 /**
  * Created by ihor_kucherenko on 10/3/18.
  * https://github.com/KucherenkoIhor
  */
 interface CancelLocationSavingUseCase {
-    fun cancel()
+    operator fun invoke()
 }
 
 class CancelLocationSavingUseCaseImpl(
         private val jobScheduler: JobScheduler
 ) : CancelLocationSavingUseCase {
-    override fun cancel() {
+    override fun invoke() {
         jobScheduler.cancelScheduledJob()
     }
 }

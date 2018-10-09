@@ -3,8 +3,8 @@ package com.ik.locationtracker.app
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.ik.locationtracker.domains.usecases.CancelLocationSavingUseCase
-import com.ik.locationtracker.domains.usecases.ScheduleLocationSavingUseCase
+import com.ik.locationtracker.layers.usecases.CancelLocationSavingUseCase
+import com.ik.locationtracker.layers.usecases.ScheduleLocationSavingUseCase
 
 
 /**
@@ -23,11 +23,11 @@ class AppStateObserverImpl(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     override fun onForeground() {
-        cancelLocationSavingUseCase.cancel()
+        cancelLocationSavingUseCase()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     override fun onBackground() {
-        scheduleLocationSavingUseCase.schedule()
+        scheduleLocationSavingUseCase()
     }
 }

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ik.locationtracker.R
-import com.ik.locationtracker.domains.entities.LocationStamp
+import com.ik.locationtracker.layers.domains.LocationStamp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_history.view.*
 

@@ -1,4 +1,4 @@
-package com.ik.locationtracker.domains.data.db.entities
+package com.ik.locationtracker.layers.data.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

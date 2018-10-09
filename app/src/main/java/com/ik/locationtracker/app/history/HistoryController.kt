@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
 import com.ik.locationtracker.R
-import com.ik.locationtracker.domains.entities.LocationStamp
+import com.ik.locationtracker.layers.domains.LocationStamp
 import kotlinx.android.synthetic.main.screen_history.view.*
 
 

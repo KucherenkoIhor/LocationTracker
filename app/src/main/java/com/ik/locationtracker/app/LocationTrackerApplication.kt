@@ -2,8 +2,8 @@ package com.ik.locationtracker.app
 
 import android.app.Application
 import com.facebook.stetho.Stetho
-import com.ik.locationtracker.domains.services.JobScheduler
-import com.ik.locationtracker.domains.services.JobSchedulerImpl
+import com.ik.locationtracker.layers.services.JobScheduler
+import com.ik.locationtracker.layers.services.JobSchedulerImpl
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.androidModule

@@ -1,9 +1,9 @@
 package com.ik.locationtracker.util
 
 import android.location.Location
-import com.ik.locationtracker.domains.entities.LocationStamp
+import com.ik.locationtracker.layers.domains.LocationStamp
 import java.util.*
-import com.ik.locationtracker.domains.data.db.entities.LocationStamp as DatabaseLocationStamp
+import com.ik.locationtracker.layers.data.db.entities.LocationStamp as DatabaseLocationStamp
 
 /**
  * Created by ihor_kucherenko on 10/3/18.

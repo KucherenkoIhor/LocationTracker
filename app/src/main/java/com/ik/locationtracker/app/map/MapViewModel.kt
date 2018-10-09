@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.ik.locationtracker.domains.entities.LocationStamp
-import com.ik.locationtracker.domains.usecases.RetrieveCurrentLocationUseCase
-import com.ik.locationtracker.domains.usecases.RetrieveLocationUpdatesUseCase
+import com.ik.locationtracker.layers.domains.LocationStamp
+import com.ik.locationtracker.layers.usecases.RetrieveCurrentLocationUseCase
+import com.ik.locationtracker.layers.usecases.RetrieveLocationUpdatesUseCase
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
@@ -24,10 +24,10 @@ class MapViewModel(application: Application) : AndroidViewModel(application), Ko
 
     fun getLocation(): LiveData<LocationStamp> {
         val liveDateMerger = MediatorLiveData<LocationStamp>()
-        liveDateMerger.addSource(retrieveCurrentLocationUseCase.getCurrentLocation()) {
+        liveDateMerger.addSource(retrieveCurrentLocationUseCase()) {
             liveDateMerger.value = it
         }
-        liveDateMerger.addSource(retrieveLocationUpdatesUseCase.getLocationUpdates()) {
+        liveDateMerger.addSource(retrieveLocationUpdatesUseCase()) {
             liveDateMerger.value = it
         }
         return liveDateMerger

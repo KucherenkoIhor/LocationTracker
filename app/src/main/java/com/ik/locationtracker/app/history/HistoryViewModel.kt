@@ -3,8 +3,8 @@ package com.ik.locationtracker.app.history
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.ik.locationtracker.domains.entities.LocationStamp
-import com.ik.locationtracker.domains.usecases.RetrieveHistoryUseCase
+import com.ik.locationtracker.layers.domains.LocationStamp
+import com.ik.locationtracker.layers.usecases.RetrieveHistoryUseCase
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
@@ -20,6 +20,6 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     private val retrieveHistoryUseCase: RetrieveHistoryUseCase by instance()
 
     fun getHistory(): LiveData<List<LocationStamp>> {
-        return retrieveHistoryUseCase.retrieveHistory()
+        return retrieveHistoryUseCase()
     }
 }

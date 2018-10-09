@@ -1,4 +1,4 @@
-package com.ik.locationtracker.domains.data.db.converters
+package com.ik.locationtracker.layers.data.db.converters
 
 import androidx.room.TypeConverter
 import java.util.*
